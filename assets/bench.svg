@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 218" width="900" height="218" role="img" aria-label="Generation throughput by model: lite 122, qwen 56, gemma 42 tokens per second">
+  <rect width="900" height="218" rx="12" fill="#0d1117"/>
+  <rect x="0.5" y="0.5" width="899" height="217" rx="12" fill="none" stroke="#30363d"/>
+
+  <text x="28" y="34" font-family="ui-monospace,SFMono-Regular,Menlo,monospace" font-size="12.5" fill="#e6edf3">generation throughput · tok/s</text>
+  <text x="872" y="34" font-family="ui-monospace,SFMono-Regular,Menlo,monospace" font-size="11" fill="#6e7681" text-anchor="end">llama.cpp · Q4 · flash-attn · q4_0 KV · 32K ctx</text>
+  <line x1="28" y1="46" x2="872" y2="46" stroke="#21262d"/>
+
+  <g font-family="ui-monospace,SFMono-Regular,Menlo,monospace" font-size="11.5">
+    <text x="28" y="79" fill="#8b949e">lite</text>
+    <text x="28" y="94" fill="#484f58" font-size="9.5">qwen3.5-9b · all GPU</text>
+    <rect x="150" y="66" width="660" height="22" rx="4" fill="#161b22"/>
+    <rect x="150" y="66" width="0" height="22" rx="4" fill="#3fb950">
+      <animate attributeName="width" from="0" to="660" dur="1.4s" begin="0.2s" fill="freeze"/>
+    </rect>
+    <text x="822" y="82" fill="#7ee787" font-weight="700">122</text>
+
+    <text x="28" y="129" fill="#8b949e">qwen</text>
+    <text x="28" y="144" fill="#484f58" font-size="9.5">35b-a3b MoE · 34 layers CPU</text>
+    <rect x="150" y="116" width="660" height="22" rx="4" fill="#161b22"/>
+    <rect x="150" y="116" width="0" height="22" rx="4" fill="#58a6ff">
+      <animate attributeName="width" from="0" to="303" dur="1.4s" begin="0.35s" fill="freeze"/>
+    </rect>
+    <text x="822" y="132" fill="#79c0ff" font-weight="700">56</text>
+
+    <text x="28" y="179" fill="#8b949e">gemma</text>
+    <text x="28" y="194" fill="#484f58" font-size="9.5">26b-a4b MoE QAT · 21 layers CPU</text>
+    <rect x="150" y="166" width="660" height="22" rx="4" fill="#161b22"/>
+    <rect x="150" y="166" width="0" height="22" rx="4" fill="#d2a8ff">
+      <animate attributeName="width" from="0" to="227" dur="1.4s" begin="0.5s" fill="freeze"/>
+    </rect>
+    <text x="822" y="182" fill="#d2a8ff" font-weight="700">42</text>
+  </g>
+</svg>

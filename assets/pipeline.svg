@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 180" width="900" height="180" role="img" aria-label="Pipeline: HuggingFace GGUF to llama.cpp router to editors and tools">
+  <defs>
+    <path id="track" d="M 196 90 H 356 M 508 90 H 604"/>
+  </defs>
+  <rect width="900" height="180" rx="12" fill="#0d1117"/>
+  <rect x="0.5" y="0.5" width="899" height="179" rx="12" fill="none" stroke="#30363d"/>
+
+  <g font-family="ui-monospace,SFMono-Regular,Menlo,monospace">
+    <rect x="32" y="62" width="164" height="56" rx="8" fill="#d29922" fill-opacity="0.1" stroke="#d29922" stroke-opacity="0.45"/>
+    <text x="114" y="86" font-size="12" fill="#e3b341" text-anchor="middle">HuggingFace</text>
+    <text x="114" y="103" font-size="10" fill="#8b949e" text-anchor="middle">./add-model Org/Repo</text>
+
+    <line x1="196" y1="90" x2="356" y2="90" stroke="#30363d" stroke-width="1.5" stroke-dasharray="4 4"/>
+    <circle r="3.5" fill="#e3b341">
+      <animate attributeName="cx" from="196" to="356" dur="2.2s" repeatCount="indefinite"/>
+      <animate attributeName="cy" values="90;90" dur="2.2s" repeatCount="indefinite"/>
+      <animate attributeName="opacity" values="0;1;1;0" dur="2.2s" repeatCount="indefinite"/>
+    </circle>
+
+    <rect x="356" y="52" width="152" height="76" rx="8" fill="#1f6feb" fill-opacity="0.12" stroke="#1f6feb" stroke-opacity="0.5"/>
+    <text x="432" y="78" font-size="12" fill="#79c0ff" text-anchor="middle">llama-server</text>
+    <text x="432" y="95" font-size="10" fill="#8b949e" text-anchor="middle">router :8080</text>
+    <text x="432" y="112" font-size="9.5" fill="#6e7681" text-anchor="middle">gemma · qwen · lite</text>
+    <circle cx="496" cy="64" r="3.5" fill="#3fb950">
+      <animate attributeName="opacity" values="1;0.25;1" dur="2s" repeatCount="indefinite"/>
+    </circle>
+
+    <line x1="508" y1="90" x2="604" y2="90" stroke="#30363d" stroke-width="1.5" stroke-dasharray="4 4"/>
+    <circle r="3.5" fill="#79c0ff">
+      <animate attributeName="cx" from="508" to="604" dur="1.6s" repeatCount="indefinite"/>
+      <animate attributeName="cy" values="90;90" dur="1.6s" repeatCount="indefinite"/>
+      <animate attributeName="opacity" values="0;1;1;0" dur="1.6s" repeatCount="indefinite"/>
+    </circle>
+
+    <rect x="604" y="30" width="264" height="32" rx="6" fill="#161b22" stroke="#30363d"/>
+    <text x="620" y="51" font-size="10.5" fill="#8b949e">Continue / Cline in VSCode</text>
+    <rect x="604" y="74" width="264" height="32" rx="6" fill="#161b22" stroke="#30363d"/>
+    <text x="620" y="95" font-size="10.5" fill="#8b949e">Jobhunt · fit scoring + drafts</text>
+    <rect x="604" y="118" width="264" height="32" rx="6" fill="#161b22" stroke="#30363d"/>
+    <text x="620" y="139" font-size="10.5" fill="#8b949e">SEO-LLM · briefs + lint guards</text>
+  </g>
+</svg>
