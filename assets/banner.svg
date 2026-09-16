@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 240" width="900" height="240" role="img" aria-label="Casey Hsu — full-stack developer, local inference">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 240" width="900" height="240" role="img" aria-label="Casey Hsu, full-stack developer, local inference">
   <defs>
     <linearGradient id="glow" x1="0" y1="0" x2="1" y2="1">
       <stop offset="0%" stop-color="#7ee787"/>
@@ -24,8 +24,8 @@
   <rect x="0" y="0" width="900" height="3" rx="1.5" fill="url(#glow)" opacity="0.9"/>
 
   <text x="32" y="78" font-family="ui-sans-serif,-apple-system,Segoe UI,Helvetica,Arial,sans-serif" font-size="44" font-weight="700" fill="#e6edf3">Casey Hsu</text>
-  <text x="34" y="106" font-family="ui-monospace,SFMono-Regular,Menlo,monospace" font-size="13.5" fill="#8b949e">full-stack developer · cms + e-commerce · local inference</text>
-  <text x="34" y="128" font-family="ui-monospace,SFMono-Regular,Menlo,monospace" font-size="13.5" fill="#6e7681">Toronto, ON · building with llama.cpp on a 10GB card</text>
+  <text x="34" y="106" font-family="ui-monospace,SFMono-Regular,Menlo,monospace" font-size="12.5" fill="#8b949e">full-stack dev · cms, e-commerce, local inference</text>
+  <text x="34" y="127" font-family="ui-monospace,SFMono-Regular,Menlo,monospace" font-size="12.5" fill="#6e7681">Toronto, ON · llama.cpp on a 10GB card</text>
 
   <g font-family="ui-monospace,SFMono-Regular,Menlo,monospace" font-size="11">
     <g>
