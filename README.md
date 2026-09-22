@@ -42,9 +42,9 @@ Agentic tools re-read a ~3k token system prompt every turn, so the dense 9B that
 entirely in VRAM beats both MoE models for tool use despite being the smallest.
 
 ```
-gemma   gemma4-26b-a4b-it-qat     32K ctx   21 MoE layers on CPU
-qwen    qwen3.6-35b-a3b-mtp       32K ctx   34 MoE layers on CPU, MTP
-lite    qwen3.5-9b-mtp Q4_K_M     32K ctx   all GPU, speed anchor + 3rd judge
+gemma   gemma4-26b-a4b-it-qat     64K ctx   22 MoE layers on CPU
+qwen    qwen3.6-35b-a3b-mtp       64K ctx   35 MoE layers on CPU, MTP
+lite    qwen3.5-9b-mtp Q4_K_M     64K ctx   all GPU, speed anchor + 3rd judge
 ```
 
 Three models rather than two for a measurement reason: the learn and tutor suites grade
@@ -58,36 +58,45 @@ inter-judge disagreement could never be computed.
 ## Building
 
 **[Local-LLM](https://github.com/SimBuds/Local-LLM)** · the stack above. Layered Markdown
-compiled into system prompts and Modelfiles, plus evals for speed, coding, content, and
-tutoring. Every behavior change is version-controlled and reversible.
+compiled into system prompts and per-model router presets, plus evals for speed, coding,
+content, tool calling, and tutoring. Nothing is baked into the weights, so every behavior
+change is version-controlled and reversible.
 `llama.cpp` `GGUF` `HuggingFace` `Python`
 
-**[Jobhunt](https://github.com/SimBuds/Jobhunt)** · local-first job-search CLI. Nine ATS
-integrations over async HTTP into durable SQLite. Scoring and drafts run on the local
-router with schema-constrained JSON and no-fabrication checks. ~700 tests, strict mypy.
-`Python` `asyncio` `SQLite` `llama-server`
+**[Jobhunt](https://github.com/SimBuds/Jobhunt)** · local-first job-search CLI. Six stages
+over one SQLite database, nine ATS integrations plus RSS over async HTTP. One gateway is the
+only place the model is reached, every call schema-bounded, and the audit path has no LLM in
+it at all. The tool fills the application form and never clicks Submit. 1,200+ tests, ruff,
+strict mypy.
+`Python` `asyncio` `SQLite` `llama-server` `Playwright`
+
+**[Everything4Cats](https://everything4cats.ca)** · WordPress affiliate site I own end to
+end. One idempotent script turns a bare Ubuntu Lightsail host into a working site; a custom
+theme and two plugins carry the post types and the affiliate-disclosure layer. Docker is the
+test harness, not the target: it runs the provisioner twice, because once proves it works
+and twice proves it is idempotent.
+`WordPress` `PHP` `AWS Lightsail` `Docker` `Bash` `WP-CLI`
 
 **[SEO-LLM](https://github.com/SimBuds/SEO-LLM)** · no standalone app. Claude Code is the
-runtime, the llama.cpp router is the model server, and lint guards catch banned words,
-heading depth, meta length, and JSON-LD before anything ships.
-`Claude Code` `llama.cpp` `JSON-LD`
-
-**[Auto-Agent](https://github.com/SimBuds/Auto-Agent)** · FastAPI + Claude API agent.
-Postgres memory, Redis context, and a typed capability server bounding what it can do.
-Permission-scoped, recorded, survives restarts.
-`FastAPI` `Claude API` `Postgres` `Redis`
+runtime and the llama.cpp router is the model server: skills replace the CLI, Bash replaces
+the workflow engine, files replace the database. Long articles are drafted section by
+section with a separate rewrite pass, and anything decidable by arithmetic lives in a
+deterministic check script rather than a second model call.
+`Claude Code` `llama.cpp` `Bash` `JSON Schema`
 
 ## Shipped
 
-Three-plus years of client work, usually sole developer and the client's direct contact.
+Three-plus years of contract work, usually sole developer and the client's direct contact.
 
 **Atelier Dacko** `2023-now` · WordPress to Shopify migration for a jewelry brand, holding
 indexed URLs through full redirect mapping. 16-page storefront on a customized Dawn theme
-plus an LLM content pipeline the editorial team reviews.
+plus an LLM content pipeline the editorial team reviews, cutting drafting time from 30
+minutes to 5 across a 200+ product catalogue.
 `-80% drafting time` `+30% organic YoY`
 
-**Neurative AI** `2026` · 8-page HubSpot CMS build from Figma. Reusable HubL modules so
-marketing ships without a developer, GitHub Actions CI, clean handoff.
+**Neurative AI** `2026` · 8-page HubSpot CMS build from the in-house team's Figma designs.
+Reusable HubL modules so marketing ships without a developer, GitHub Actions CI, clean
+handoff.
 `90+ PageSpeed` `-30% load time`
 
 **Geeked Out Goods** `2024` · Python ingest for a 400+ item Shopify catalog, schema-checking
@@ -99,10 +108,10 @@ CSV exports so malformed feeds never reached the live store.
 ```
 core      TypeScript · React/Next · Node/Express · Python · PHP/Sass
 cms       Shopify (Liquid) · HubSpot (HubL) · WordPress · Contentful · headless
-local ai  llama.cpp · GGUF/quants · HuggingFace · MCP · Claude Code · FastAPI
+local ai  llama.cpp · GGUF/quants · HuggingFace · MCP · Claude Code · Claude API
 seo       technical SEO · Core Web Vitals · JSON-LD · Search Console · GA4
-data      Postgres · MySQL · MongoDB · Redis
+data      Postgres · MySQL · MongoDB · Redis · SQLite
 devops    Docker · GitHub Actions · Jest · Playwright · AWS · nginx
 ```
 
-<sub>Contentful Certified Professional · George Brown College, Computer Programming &amp; Analysis (Dean's List) · ten years as a sous chef first, which is where the deadline tolerance comes from.</sub>
+<sub>Contentful Certified Professional, with the Personalization Skill Badge · George Brown Polytechnic, Computer Programming &amp; Analysis (Dean's List, all terms) · ten years as a sous chef first, which is where the deadline tolerance comes from.</sub>
