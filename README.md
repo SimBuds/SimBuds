@@ -71,7 +71,7 @@ strict mypy.
 `Python` `asyncio` `SQLite` `llama-server` `Playwright`
 
 **[Everything4Cats](https://everything4cats.ca)** · WordPress affiliate site I own end to
-end. One idempotent script turns a bare Ubuntu Lightsail host into a working site; a custom
+end, launching Nov 2026. One idempotent script turns a bare Ubuntu Lightsail host into a working site; a custom
 theme and two plugins carry the post types and the affiliate-disclosure layer. Docker is the
 test harness, not the target: it runs the provisioner twice, because once proves it works
 and twice proves it is idempotent.
@@ -86,32 +86,34 @@ deterministic check script rather than a second model call.
 
 ## Shipped
 
-Three-plus years of contract work, usually sole developer and the client's direct contact.
+Developer since 2022: part-time at Atelier Dacko, plus contract work for Neurative AI and
+Geeked Out Goods.
 
 **Atelier Dacko** `2023-now` · WordPress to Shopify migration for a jewelry brand, holding
-indexed URLs through full redirect mapping. 16-page storefront on a customized Dawn theme
-plus an LLM content pipeline the editorial team reviews, cutting drafting time from 30
-minutes to 5 across a 200+ product catalogue.
-`-80% drafting time` `+30% organic YoY`
+indexed URLs. The store launched in 2026 as a Shopify and WordPress hybrid on one domain via
+a Cloudflare Worker, on a customized Dawn theme. Google search impressions grew 78% in six
+months, and a local LLM content pipeline cut drafting from 30 minutes to 5 across 200+
+products.
+`+78% search impressions` `-80% drafting time`
 
-**Neurative AI** `2026` · 8-page HubSpot CMS build from the in-house team's Figma designs.
-Reusable HubL modules so marketing ships without a developer, GitHub Actions CI, clean
-handoff.
-`90+ PageSpeed` `-30% load time`
+**Neurative AI** `2026` · Marketplace-standard HubSpot theme with 22 reusable HubL modules,
+built from the in-house team's Figma designs. WCAG 2.1 AA, with HubSpot CRM integration.
+`22 modules` `WCAG 2.1 AA`
 
-**Geeked Out Goods** `2024` · Python ingest for a 400+ item Shopify catalog, schema-checking
+**Geeked Out Goods** `2022-2023` · Python ingest for a 400+ item Shopify catalog, schema-checking
 CSV exports so malformed feeds never reached the live store.
 `400+ items` `validated at ingest`
 
 ## Stack
 
 ```
-core      TypeScript · React/Next · Node/Express · Python · PHP/Sass
-cms       Shopify (Liquid) · HubSpot (HubL) · WordPress · Contentful · headless
-local ai  llama.cpp · GGUF/quants · HuggingFace · MCP · Claude Code · Claude API
-seo       technical SEO · Core Web Vitals · JSON-LD · Search Console · GA4
-data      Postgres · MySQL · MongoDB · Redis · SQLite
-devops    Docker · GitHub Actions · Jest · Playwright · AWS · nginx
+core        TypeScript · React · Python · PHP/Sass
+cms         Shopify (Liquid) · HubSpot (HubL) · WordPress · Contentful
+local ai    llama.cpp · GGUF/quants · HuggingFace · MCP · Claude Code
+seo         technical SEO · JSON-LD · Search Console · GA4
+data        SQLite
+devops      Docker · GitHub Actions · Playwright · AWS · nginx
+coursework  Java · Angular · MongoDB
 ```
 
-<sub>Contentful Certified Professional, with the Personalization Skill Badge · George Brown Polytechnic, Computer Programming &amp; Analysis (Dean's List, all terms) · ten years as a sous chef first, which is where the deadline tolerance comes from.</sub>
+<sub>Contentful Certified Professional, with the Personalization Skill Badge · George Brown Polytechnic, Computer Programming &amp; Analysis (Dean's List, all terms) · ten years as a sous chef, until Nov 2024 alongside the diploma and part-time dev work, which is where the deadline tolerance comes from.</sub>
