@@ -1,4 +1,4 @@
-<img src="assets/banner.svg" alt="Casey Hsu, full-stack developer, local inference" width="100%">
+<img src="assets/banner.svg" alt="Casey Hsu, Shopify and WordPress developer, local inference" width="100%">
 
 <p align="center">
   <a href="https://caseyhsu.com">caseyhsu.com</a> ·
@@ -9,13 +9,13 @@
 
 ```console
 $ cat ~/.plan
-CMS and e-commerce by day: Shopify, HubSpot, WordPress, Contentful.
+CMS and e-commerce by day: Shopify, WordPress, HubSpot, Contentful.
 Local inference by night: llama.cpp, GGUF quants, and an eval suite
 that picks which model gets which job so I don't have to guess.
 ```
 
 I build the client work and the tooling I use to do it. Most spare cycles go into a
-three-model local stack on one 10 GB card. No fine-tuning: just prompts, quants, and
+four-model local stack on one 10 GB card. No fine-tuning: just prompts, quants, and
 measurements.
 
 ---
@@ -31,23 +31,24 @@ each model's system prompt, `make serve` brings up the router with one slot per 
 
 <img src="assets/bench.svg" alt="Generation throughput by model" width="100%">
 
-Measured by `eval/run-speed.py` on a fixed prompt set, same sampler across all three.
+Measured by `eval/run-speed.py` on a fixed prompt set, same sampler across all four.
 Generation speed is the boring half. Prompt ingest is what you actually feel:
 
 ```
-prompt tok/s     lite 2796  ·  gemma 701  ·  qwen 430
+prompt tok/s     lite 3415  ·  gemma 1541  ·  freedom 1194  ·  qwen 1039
 ```
 
 Agentic tools re-read a ~3k token system prompt every turn, so the dense 9B that fits
-entirely in VRAM beats both MoE models for tool use despite being the smallest.
+entirely in VRAM beats all three MoE models for tool use despite being the smallest.
 
 ```
-gemma   gemma4-26b-a4b-it-qat     64K ctx   22 MoE layers on CPU
-qwen    qwen3.6-35b-a3b-mtp       64K ctx   35 MoE layers on CPU, MTP
-lite    qwen3.5-9b-mtp Q4_K_M     64K ctx   all GPU, speed anchor + 3rd judge
+gemma   gemma4-26b-a4b-it-qat                            128K ctx  24 MoE layers on CPU
+qwen    qwen3.6-35b-a3b-mtp                              128K ctx  37 MoE layers on CPU, MTP
+lite    qwen3.5-9b-mtp Q4_K_M                            128K ctx  all GPU, speed anchor + 3rd judge
+freedom Qwen3.6-35B-A3B-Uncensored-HauhauCS-Aggressive   128K ctx  34 MoE layers on CPU
 ```
 
-Three models rather than two for a measurement reason: the learn and tutor suites grade
+Three or more models rather than two for a measurement reason: the learn and tutor suites grade
 with a leave-one-out judge panel, so two models left exactly one judge per response and
 inter-judge disagreement could never be computed.
 
@@ -86,19 +87,24 @@ deterministic check script rather than a second model call.
 
 ## Shipped
 
-Developer since 2022: part-time at Atelier Dacko, plus contract work for Neurative AI and
-Geeked Out Goods.
+Developer since 2022: contract work for Atelier Dacko, Neurative AI and Geeked Out Goods.
 
-**Atelier Dacko** `2023-now` · WordPress to Shopify migration for a jewelry brand, holding
-indexed URLs. The store launched in 2026 as a Shopify and WordPress hybrid on one domain via
-a Cloudflare Worker, on a customized Dawn theme. Google search impressions grew 78% in six
-months, and a local LLM content pipeline cut drafting from 30 minutes to 5 across 200+
+**Atelier Dacko** `2023-now` · Sole developer for a custom jewelry brand.
+Moved average Google position from 38 to 13 in 16 months, with 44 non-brand
+terms on page one and search impressions up 78%. Running a WordPress to
+Shopify migration that holds indexed URLs, as a hybrid launch with both
+platforms on one domain via a Cloudflare Worker, on a custom Dawn theme
+with 46 custom sections. Rebuilt the WordPress site in 2024 on Elementor
+Pro with ACF and PHP, cutting load time 25% and page size 40%. A local LLM
+pipeline cut product descriptions from 30 minutes to 5 across 200+
 products.
-`+78% search impressions` `-80% drafting time`
+`38 → 13 avg position` `+78% search impressions` `-80% drafting time`
 
-**Neurative AI** `2026` · Marketplace-standard HubSpot theme with 22 reusable HubL modules,
-built from the in-house team's Figma designs. WCAG 2.1 AA, with HubSpot CRM integration.
-`22 modules` `WCAG 2.1 AA`
+**Neurative AI** `2026` · Marketplace-standard HubSpot theme with 22
+reusable HubL modules, built from the in-house team's Figma designs. Built
+to WCAG 2.1 AA, scoring 95 for performance and 90 for accessibility in
+Lighthouse.
+`22 modules` `WCAG 2.1 AA` `Lighthouse 95 / 90`
 
 **Geeked Out Goods** `2022-2023` · Python ingest for a 400+ item Shopify catalog, schema-checking
 CSV exports so malformed feeds never reached the live store.
@@ -107,7 +113,7 @@ CSV exports so malformed feeds never reached the live store.
 ## Stack
 
 ```
-core        TypeScript · React · Python · PHP/Sass
+core        JavaScript · PHP · Python · HTML/CSS
 cms         Shopify (Liquid) · HubSpot (HubL) · WordPress · Contentful
 local ai    llama.cpp · GGUF/quants · HuggingFace · MCP · Claude Code
 seo         technical SEO · JSON-LD · Search Console · GA4
