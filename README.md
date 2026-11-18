@@ -56,6 +56,22 @@ inter-judge disagreement could never be computed.
 > copied out of Ollama's blob store, so their benchmark history carries over. `lite` starts
 > fresh: Ollama's `qwen3.5:9b` won't load in llama.cpp, so it's unsloth's MTP build now.
 
+### The hardware
+
+One desktop runs all of it: Ryzen 9 5900X, RTX 3080 10 GB, 32 GB DDR4-3600,
+dual-booting Windows 11 and Arch (linux-zen). The same benchmarks on both land
+within 1.6% (Superposition) and 0.4% (Cyberpunk 2077, 1440p RT Ultra), so the
+OS choice costs nothing.
+
+A fanless ZBOX mini PC (2-core Celeron, 2 GB RAM) stays on around the clock for
+a Discord bot my friends use. It is its own box because friends are untrusted
+input and never share a machine with my own agent. The model stays on the
+desktop's GPU, reached through a reverse SSH tunnel the desktop opens, so the
+desktop runs no SSH server. When the desktop sleeps, the bot stays up and
+answers offline from code.
+
+Full specs, benchmarks, and thermals: [WORKSTATION.md](WORKSTATION.md).
+
 ## Building
 
 **[Local-LLM](https://github.com/SimBuds/Local-LLM)** · the stack above. Layered Markdown
