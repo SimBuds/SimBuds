@@ -2,21 +2,21 @@
 
 <p align="center">
   <a href="https://caseyhsu.com">caseyhsu.com</a> ·
-  <a href="https://linkedin.com/in/casey-hsu">linkedin</a> ·
-  <a href="https://caseyhsu.com/resume.pdf">résumé</a> ·
-  <a href="mailto:casey-hsu@outlook.com">email</a>
+  <a href="https://linkedin.com/in/casey-hsu">LinkedIn</a> ·
+  <a href="https://caseyhsu.com/resume.pdf">Resume</a> ·
+  <a href="mailto:casey-hsu@outlook.com">Email</a>
 </p>
 
 ```console
-$ cat ~/.plan
 CMS and e-commerce by day: Shopify, WordPress, HubSpot, Contentful.
-Local inference by night: llama.cpp, GGUF quants, and an eval suite
-that picks which model gets which job so I don't have to guess.
+
+Local inference by night: llama.cpp, GGUF quants, and an eval suite that picks which model gets which job so I don't have to guess.
+
+I build the client work and the tooling I use to do it. Most spare cycles go into a four-model local stack on one 10 GB card.
+
+No fine-tuning: just prompts, quants, and measurements.
 ```
 
-I build the client work and the tooling I use to do it. Most spare cycles go into a
-four-model local stack on one 10 GB card. No fine-tuning: just prompts, quants, and
-measurements.
 
 ---
 
@@ -24,118 +24,91 @@ measurements.
 
 <img src="assets/pipeline.svg" alt="HuggingFace to llama-server router to editors and tools" width="100%">
 
-`./add-model Org/Repo-GGUF` queries the HuggingFace API, lists every GGUF in the repo with
-its quant and size, and writes the download plus a builder preset. `make build` generates
-each model's system prompt, `make serve` brings up the router with one slot per model and a
-10 minute idle sleep that drops a loaded model from 6226 MiB of VRAM to 242.
+`./add-model Org/Repo-GGUF` queries the HuggingFace API, lists every GGUF in the repo with its quant and size, and writes the download plus a builder preset. `make build` generates
+each model's system prompt, `make serve` brings up the router with one slot per model and a 10 minute idle sleep that drops a loaded model from 6226 MiB of VRAM to 242.
 
 <img src="assets/bench.svg" alt="Generation throughput by model" width="100%">
 
-Measured by `eval/run-speed.py` on a fixed prompt set, same sampler across all four.
-Generation speed is the boring half. Prompt ingest is what you actually feel:
+Measured by `eval/run-speed.py` on a fixed prompt set, same sampler across all four. Generation speed is the boring half. Prompt ingest is what you actually feel:
 
 ```
-prompt tok/s     lite 3415  ·  gemma 1541  ·  freedom 1194  ·  qwen 1039
+Prompt Tok/s     Lite 3415  ·  Gemma 1541  ·  Freedom 1194  ·  Qwen 1039
 ```
 
-Agentic tools re-read a ~3k token system prompt every turn, so the dense 9B that fits
-entirely in VRAM beats all three MoE models for tool use despite being the smallest.
+Agentic tools re-read a ~3k token system prompt every turn, so the dense 9B that fits entirely in VRAM beats all three MoE models for tool use despite being the smallest.
 
 ```
-gemma   gemma4-26b-a4b-it-qat                            128K ctx  24 MoE layers on CPU
-qwen    qwen3.6-35b-a3b-mtp                              128K ctx  37 MoE layers on CPU, MTP
-lite    qwen3.5-9b-mtp Q4_K_M                            128K ctx  all GPU, speed anchor + 3rd judge
-freedom Qwen3.6-35B-A3B-Uncensored-HauhauCS-Aggressive   128K ctx  34 MoE layers on CPU
+Gemma   gemma4-26b-a4b-it-qat                            128K ctx  24 MoE layers on CPU
+Qwen    qwen3.6-35b-a3b-mtp                              128K ctx  37 MoE layers on CPU, MTP
+Lite    qwen3.5-9b-mtp Q4_K_M                            128K ctx  all GPU, speed anchor + 3rd judge
+Freedom Qwen3.6-35B-A3B-Uncensored-HauhauCS-Aggressive   128K ctx  34 MoE layers on CPU
 ```
 
-Three or more models rather than two for a measurement reason: the learn and tutor suites grade
-with a leave-one-out judge panel, so two models left exactly one judge per response and
-inter-judge disagreement could never be computed.
+Three or more models rather than two for a measurement reason: the learn and tutor suites grade with a leave-one-out
+judge panel, so two models left exactly one judge per response and inter-judge disagreement could never be computed.
 
-> Moved off Ollama to llama.cpp on 2026-09-14. `gemma` and `qwen` are the same weights,
-> copied out of Ollama's blob store, so their benchmark history carries over. `lite` starts
-> fresh: Ollama's `qwen3.5:9b` won't load in llama.cpp, so it's unsloth's MTP build now.
+> Moved off Ollama to llama.cpp on 2026-09-14. `gemma` and `qwen` are the same weights, copied out of Ollama's blob store, so their benchmark history carries over.
+> `Lite` starts fresh: Ollama's `qwen3.5:9b` won't load in llama.cpp, so it's unsloth's MTP build now.
 
 ### The hardware
 
-One desktop runs all of it: Ryzen 9 5900X, RTX 3080 10 GB, 32 GB DDR4-3600,
-dual-booting Windows 11 and Arch (linux-zen). The same benchmarks on both land
-within 1.6% (Superposition) and 0.4% (Cyberpunk 2077, 1440p RT Ultra), so the
-OS choice costs nothing.
+One desktop runs all of it: Ryzen 9 5900X, RTX 3080 10 GB, 32 GB DDR4-3600, dual-booting Windows 11 and Arch (linux-zen). The same benchmarks on both land
+within 1.6% (Superposition) and 0.4% (Cyberpunk 2077, 1440p RT Ultra), so the OS choice costs nothing.
 
-A fanless ZBOX mini PC (2-core Celeron, 2 GB RAM) stays on around the clock for
-a Discord bot my friends use. It is its own box because friends are untrusted
-input and never share a machine with my own agent. The model stays on the
-desktop's GPU, reached through a reverse SSH tunnel the desktop opens, so the
-desktop runs no SSH server. When the desktop sleeps, the bot stays up and
-answers offline from code.
+A fanless ZBOX mini PC (2-core Celeron, 2 GB RAM) stays on around the clock for a Discord bot my friends use. It is its own box because friends are untrusted
+input and never share a machine with my own agent. The model stays on the desktop's GPU, reached through a reverse SSH tunnel the desktop opens, so the
+desktop runs no SSH server. When the desktop sleeps, the bot stays up and answers offline from code.
 
 Full specs, benchmarks, and thermals: [WORKSTATION.md](WORKSTATION.md).
 
 ## Building
 
-**[Local-LLM](https://github.com/SimBuds/Local-LLM)** · the stack above. Layered Markdown
-compiled into system prompts and per-model router presets, plus evals for speed, coding,
-content, tool calling, and tutoring. Nothing is baked into the weights, so every behavior
-change is version-controlled and reversible.
+**[Local-LLM](https://github.com/SimBuds/Local-LLM)** · the stack above. Layered Markdown compiled into system prompts and per-model router presets, plus evals for speed, coding,
+content, tool calling, and tutoring. Nothing is baked into the weights, so every behavior change is version-controlled and reversible.
 `llama.cpp` `GGUF` `HuggingFace` `Python`
 
 **[Jobhunt](https://github.com/SimBuds/Jobhunt)** · local-first job-search CLI. Six stages
-over one SQLite database, nine ATS integrations plus RSS over async HTTP. One gateway is the
-only place the model is reached, every call schema-bounded, and the audit path has no LLM in
-it at all. The tool fills the application form and never clicks Submit. 1,200+ tests, ruff,
-strict mypy.
+over one SQLite database, nine ATS integrations plus RSS over async HTTP. One gateway is the only place the model is reached, every call schema-bounded, and the
+audit path has no LLM in it at all. The tool fills the application form and never clicks Submit. 1,200+ tests, ruff, strict mypy.
 `Python` `asyncio` `SQLite` `llama-server` `Playwright`
 
 **[Everything4Cats](https://everything4cats.ca)** · WordPress affiliate site I own end to
-end, launching Nov 2026. One idempotent script turns a bare Ubuntu Lightsail host into a working site; a custom
-theme and two plugins carry the post types and the affiliate-disclosure layer. Docker is the
-test harness, not the target: it runs the provisioner twice, because once proves it works
-and twice proves it is idempotent.
+end, launching Nov 2026. One idempotent script turns a bare Ubuntu Lightsail host into a working site; a custom theme and two plugins carry the post types and the
+affiliate-disclosure layer. Docker is the test harness, not the target: it runs the provisioner twice, because once proves it works and twice proves it is idempotent.
 `WordPress` `PHP` `AWS Lightsail` `Docker` `Bash` `WP-CLI`
 
 **[SEO-LLM](https://github.com/SimBuds/SEO-LLM)** · no standalone app. Claude Code is the
-runtime and the llama.cpp router is the model server: skills replace the CLI, Bash replaces
-the workflow engine, files replace the database. Long articles are drafted section by
-section with a separate rewrite pass, and anything decidable by arithmetic lives in a
-deterministic check script rather than a second model call.
+runtime and the llama.cpp router is the model server: skills replace the CLI, Bash replaces the workflow engine, files replace the database. Long articles are drafted section by
+section with a separate rewrite pass, and anything decidable by arithmetic lives in a deterministic check script rather than a second model call.
 `Claude Code` `llama.cpp` `Bash` `JSON Schema`
 
 ## Shipped
 
 Developer since 2022: contract work for Atelier Dacko, Neurative AI and Geeked Out Goods.
 
-**Atelier Dacko** `2023-now` · Sole developer for a custom jewelry brand.
-Moved average Google position from 38 to 13 in 16 months, with 44 non-brand
-terms on page one and search impressions up 78%. Running a WordPress to
-Shopify migration that holds indexed URLs, as a hybrid launch with both
-platforms on one domain via a Cloudflare Worker, on a custom Dawn theme
-with 46 custom sections. Rebuilt the WordPress site in 2024 on Elementor
-Pro with ACF and PHP, cutting load time 25% and page size 40%. A local LLM
-pipeline cut product descriptions from 30 minutes to 5 across 200+
-products.
+**Atelier Dacko** `2023-now` · Sole developer for a custom jewelry brand. Moved average Google position from 38 to 13 in 16 months, with 44 non-brand
+terms on page one and search impressions up 78%. Running a WordPress to Shopify migration that holds indexed URLs, as a hybrid launch with both
+platforms on one domain via a Cloudflare Worker, on a custom Dawn theme with 46 custom sections. Rebuilt the WordPress site in 2024 on Elementor
+Pro with ACF and PHP, cutting load time 25% and page size 40%. A local LLM pipeline cut product descriptions from 30 minutes to 5 across 200+ products.
 `38 → 13 avg position` `+78% search impressions` `-80% drafting time`
 
-**Neurative AI** `2026` · Marketplace-standard HubSpot theme with 22
-reusable HubL modules, built from the in-house team's Figma designs. Built
-to WCAG 2.1 AA, scoring 95 for performance and 90 for accessibility in
-Lighthouse.
+**Neurative AI** `2026` · Marketplace-standard HubSpot theme with 22 reusable HubL modules, built from the in-house team's Figma designs.
+Built to WCAG 2.1 AA, scoring 95 for performance and 90 for accessibility in Lighthouse.
 `22 modules` `WCAG 2.1 AA` `Lighthouse 95 / 90`
 
-**Geeked Out Goods** `2022-2023` · Python ingest for a 400+ item Shopify catalog, schema-checking
-CSV exports so malformed feeds never reached the live store.
+**Geeked Out Goods** `2022-2023` · Python ingest for a 400+ item Shopify catalog, schema-checking CSV exports so malformed feeds never reached the live store.
 `400+ items` `validated at ingest`
 
 ## Stack
 
 ```
-core        JavaScript · PHP · Python · HTML/CSS
-cms         Shopify (Liquid) · HubSpot (HubL) · WordPress · Contentful
-local ai    llama.cpp · GGUF/quants · HuggingFace · MCP · Claude Code
-seo         technical SEO · JSON-LD · Search Console · GA4
-data        SQLite
-devops      Docker · GitHub Actions · Playwright · AWS · nginx
-coursework  Java · Angular · MongoDB
+Core        JavaScript · PHP · Python · HTML/CSS
+CMS         Shopify (Liquid) · HubSpot (HubL) · WordPress · Contentful
+Local AI    llama.cpp · GGUF/quants · HuggingFace · MCP · Claude Code
+SEO         technical SEO · JSON-LD · Search Console · GA4
+Data        SQLite
+Devops      Docker · GitHub Actions · Playwright · AWS · nginx
+Coursework  Java · Angular · MongoDB
 ```
 
-<sub>Contentful Certified Professional, with the Personalization Skill Badge · George Brown Polytechnic, Computer Programming &amp; Analysis (Dean's List, all terms) · ten years as a sous chef, until Nov 2024 alongside the diploma and part-time dev work, which is where the deadline tolerance comes from.</sub>
+<sub>Contentful Certified Professional, with the Personalization Skill Badge · George Brown Polytechnic, Computer Programming  Analysis (Dean's List, all terms) · ten years as a sous chef, until Nov 2024 alongside the diploma and part-time dev work, which is where the deadline tolerance comes from.</sub>
