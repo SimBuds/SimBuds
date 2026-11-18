@@ -10,9 +10,9 @@
 ```console
 CMS and e-commerce by day: Shopify, WordPress, HubSpot, Contentful.
 
-Local inference by night: llama.cpp, GGUF quants, and an eval suite that picks which model gets which job so I don't have to guess.
-
-I build the client work and the tooling I use to do it. Most spare cycles go into a four-model local stack on one 10 GB card.
+Local inference by night: llama.cpp, GGUF quants, and an eval suite that picks
+which model gets which job so I don't have to guess.I build the client work and the
+tooling I use to do it. Most spare cycles go into a four-model local stack on one 10 GB card.
 
 No fine-tuning: just prompts, quants, and measurements.
 ```
